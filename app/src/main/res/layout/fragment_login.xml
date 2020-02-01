@@ -77,28 +77,27 @@
                     app:passwordFocus="@{viewModel}"                     />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/loginButton"
                 android:layout_width="295dp"
                 android:layout_height="56dp"
                 android:layout_marginTop="64dp"
-                android:background="@color/colorAccent"
                 android:onClick="@{()->viewModel.login()}"
                 android:text="Login"
-                android:textColor="@color/white"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/passwordLayout" />
+                app:layout_constraintTop_toBottomOf="@+id/passwordLayout"
+                app:cornerRadius="24dp"/>
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/registerButton"
                 android:layout_width="295dp"
                 android:layout_height="56dp"
+                android:layout_marginTop="16dp"
                 android:layout_marginBottom="136dp"
-                android:background="@color/colorAccent"
                 android:onClick="@{()->viewModel.moveToRegistration()}"
                 android:text="Sign up"
-                android:textColor="@color/white"
+                app:cornerRadius="24dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

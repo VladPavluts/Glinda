@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProviders
 
 import com.example.glinda.R
 import com.example.glinda.databinding.FragmentLoginBinding
+import com.firebase.ui.auth.AuthUI
 
 
 class LoginFragment : Fragment() {
@@ -30,7 +31,7 @@ class LoginFragment : Fragment() {
 
         viewModel.registationEvent.observe(viewLifecycleOwner, Observer { event ->
             if (event) {
-                Toast.makeText(activity,"Registration",Toast.LENGTH_LONG).show()
+                showSignInOptions()
                 viewModel.resetEvent()
             }
         })
@@ -60,6 +61,20 @@ class LoginFragment : Fragment() {
 
         return binding.root
     }
+    private val MYREQ=1234
+    val providers = arrayListOf(
+        AuthUI.IdpConfig.EmailBuilder().build(),
+        AuthUI.IdpConfig.GoogleBuilder().build())
+
+    fun showSignInOptions() {
+        startActivityForResult(
+            AuthUI.getInstance().createSignInIntentBuilder()
+                .setAvailableProviders(providers)
+                .setLogo(R.drawable.logo)
+                .setTheme(R.style.GlindaTheme)
+                .build(),MYREQ)
+    }
+
 
 
 }

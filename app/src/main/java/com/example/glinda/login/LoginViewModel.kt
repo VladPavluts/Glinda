@@ -17,11 +17,12 @@ class LoginViewModel : ViewModel(){
     val passwordIsValid:LiveData<Boolean>
         get() = _passwordIsValid
 
-    fun checkEmail(){
-        _emailIsValid.value=EmailValidator.isValid(email.value ?: "")
+    fun checkEmail() {
+        _emailIsValid.value = email.value?.contains("@") ?: false
     }
-    fun checkPassword(){
-        _passwordIsValid.value=password.value?.length ?:0>=8
+
+    fun checkPassword() {
+        _passwordIsValid.value = password.value?.length ?: 0 >= 8
     }
     fun login(){
         checkEmail()

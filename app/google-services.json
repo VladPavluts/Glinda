@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "550311664991",
+    "firebase_url": "https://glinda-485aa.firebaseio.com",
+    "project_id": "glinda-485aa",
+    "storage_bucket": "glinda-485aa.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:550311664991:android:f3f2470d2f1ae86efbeaea",
+        "android_client_info": {
+          "package_name": "com.example.glinda"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "550311664991-220ifi80fg1q10rss9cb66gu9ff9sl0t.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.glinda",
+            "certificate_hash": "8b71cf830c9f3a11463bcbecb6559f6f2e2c1f6f"
+          }
+        },
+        {
+          "client_id": "550311664991-ocl12jgv5vefj6r7fo63k0dfg5cisjpo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDIkvADCRs5C6egPIscU4P28mhoFlPVflU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "550311664991-ocl12jgv5vefj6r7fo63k0dfg5cisjpo.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
