@@ -52,5 +52,6 @@ class LoginViewModel : ViewModel(){
         _registrationEvent.value = false
     }
 
+
 }
 
