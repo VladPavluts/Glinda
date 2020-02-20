@@ -3,24 +3,20 @@ package com.example.glinda.accounting
 import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.graphics.Bitmap
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.provider.MediaStore
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.ViewModelProvider
+import android.widget.Button
 import androidx.navigation.fragment.findNavController
-import com.bumptech.glide.Glide
 
 import com.example.glinda.R
-import com.example.glinda.databinding.AccountFragmentBinding
+import com.example.glinda.glide.GlideApp
 import com.example.glinda.util.FirestoreUtil
 import com.example.glinda.util.StorageUtil
 import com.firebase.ui.auth.AuthUI
-import com.google.android.gms.auth.api.Auth
 import kotlinx.android.synthetic.main.account_fragment.*
 import kotlinx.android.synthetic.main.account_fragment.view.*
 import java.io.ByteArrayOutputStream
@@ -47,7 +43,7 @@ class AccountFragment : Fragment() {
                 startActivityForResult(Intent.createChooser(intent,"Select image"),PICK_IMAGE_REQUEST)
             }
         }
-
+        val accSaveButton=view.findViewById<Button>(R.id.accSaveButton)
         accSaveButton.setOnClickListener {
             if(::selectedImageBytes.isInitialized){
                 StorageUtil.uploadProfilePhoto(selectedImageBytes){imagePath ->  
@@ -57,6 +53,7 @@ class AccountFragment : Fragment() {
                 FirestoreUtil.updateCurrentUser(nameEditText.text.toString(),bioEditText.text.toString(),null)
             }
         }
+        val accLogOutButton=view.findViewById<Button>(R.id.accLogOutButton)
 
         accLogOutButton.setOnClickListener {
             AuthUI.getInstance()
@@ -79,7 +76,7 @@ class AccountFragment : Fragment() {
 
             selectedImageBytes=outputStream.toByteArray()
 
-            Glide.with(this)
+            GlideApp.with(this)
                 .load(selectedImageBytes)
                 .into(profile_photo)
 
@@ -95,9 +92,9 @@ class AccountFragment : Fragment() {
                 nameEditText.setText(user.name)
                 bioEditText.setText(user.bio)
                 if(!isImageChanged && user.profilePicturePath!=null){
-                    Glide.with(this)
+                    GlideApp.with(this)
                         .load(StorageUtil.getCurrentRef(user.profilePicturePath))
-                        //.placeholser(R.drawable.ic_account_circle_biriz_24dp)
+                        .placeholder(R.drawable.ic_account_circle_biriz_24dp)
                         .into(profile_photo)
                 }
             }

@@ -33,6 +33,7 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     kapt 'com.android.databinding:compiler:3.1.4'
+    kapt "android.arch.lifecycle:compiler:1.1.1"
     implementation 'androidx.appcompat:appcompat:1.0.2'
     implementation 'androidx.core:core-ktx:1.1.0'
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0"
@@ -43,11 +44,10 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
     implementation 'com.google.android.material:material:1.0.0'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
-    implementation 'androidx.annotation:annotation:1.1.0'
+
 
     //firebase
     implementation 'com.google.firebase:firebase-core:17.2.2'
-
     implementation 'com.google.firebase:firebase-storage:19.1.1'
     implementation 'com.firebaseui:firebase-ui-storage:3.3.1'
     implementation 'com.google.firebase:firebase-firestore:21.4.0'
@@ -56,8 +56,9 @@ dependencies {
     implementation 'com.google.firebase:firebase-messaging:20.1.0'
 
     //glide
-    implementation 'com.github.bumptech.glide:glide:4.6.1'
-    kapt 'com.github.bumptech.glide:compiler:4.6.1'
+    implementation 'com.github.bumptech.glide:glide:4.9.0'
+    kapt 'com.github.bumptech.glide:compiler:4.9.0'
+    kapt 'androidx.annotation:annotation:1.1.0'
 
 }
 kapt {
@@ -65,9 +66,9 @@ kapt {
 }
 
 //used to resolve annotation conflicts
-configurations.all {
+/*configurations.all {
     resolutionStrategy {
         force 'com.android.support:support-annotations:23.1.1'
     }
-}
+}*/
 
