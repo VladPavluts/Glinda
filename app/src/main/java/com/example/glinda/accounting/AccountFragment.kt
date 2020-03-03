@@ -1,6 +1,7 @@
 package com.example.glinda.accounting
 
 import android.app.Activity.RESULT_OK
+import android.app.DownloadManager
 import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
@@ -10,7 +11,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.Toast
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.request.Request
+import com.bumptech.glide.request.RequestOptions
 
 import com.example.glinda.R
 import com.example.glinda.glide.GlideApp
@@ -42,26 +46,25 @@ class AccountFragment : Fragment() {
                 }
                 startActivityForResult(Intent.createChooser(intent,"Select image"),PICK_IMAGE_REQUEST)
             }
-        }
-        val accSaveButton=view.findViewById<Button>(R.id.accSaveButton)
-        accSaveButton.setOnClickListener {
-            if(::selectedImageBytes.isInitialized){
-                StorageUtil.uploadProfilePhoto(selectedImageBytes){imagePath ->  
-                    FirestoreUtil.updateCurrentUser(nameEditText.text.toString(),bioEditText.text.toString(),imagePath)
+            accSaveButton.setOnClickListener {
+                if(::selectedImageBytes.isInitialized){
+                    StorageUtil.uploadProfilePhoto(selectedImageBytes){imagePath ->
+                        FirestoreUtil.updateCurrentUser(nameEditText.text.toString(),bioEditText.text.toString(),imagePath)
+                    }
+                } else{
+                    FirestoreUtil.updateCurrentUser(nameEditText.text.toString(),bioEditText.text.toString(),null)
                 }
-            } else{
-                FirestoreUtil.updateCurrentUser(nameEditText.text.toString(),bioEditText.text.toString(),null)
+                Toast.makeText(this@AccountFragment.context!!,"Saved",Toast.LENGTH_SHORT).show()
+            }
+            accLogOutButton.setOnClickListener {
+                AuthUI.getInstance()
+                    .signOut(this@AccountFragment.context!!)
+                    .addOnCompleteListener {
+                        findNavController().navigate(AccountFragmentDirections.actionAccountFragmentToLoginFragment())
+                    }
             }
         }
-        val accLogOutButton=view.findViewById<Button>(R.id.accLogOutButton)
 
-        accLogOutButton.setOnClickListener {
-            AuthUI.getInstance()
-                .signOut(this@AccountFragment.context!!)
-                .addOnCompleteListener {
-                    findNavController().navigate(AccountFragmentDirections.actionAccountFragmentToLoginFragment())
-                }
-        }
 
         return view
     }
@@ -76,8 +79,10 @@ class AccountFragment : Fragment() {
 
             selectedImageBytes=outputStream.toByteArray()
 
+            val options= RequestOptions().circleCrop()
             GlideApp.with(this)
                 .load(selectedImageBytes)
+                .apply(options)
                 .into(profile_photo)
 
             isImageChanged=true
@@ -92,9 +97,11 @@ class AccountFragment : Fragment() {
                 nameEditText.setText(user.name)
                 bioEditText.setText(user.bio)
                 if(!isImageChanged && user.profilePicturePath!=null){
+                    val options= RequestOptions().circleCrop()
                     GlideApp.with(this)
                         .load(StorageUtil.getCurrentRef(user.profilePicturePath))
                         .placeholder(R.drawable.ic_account_circle_biriz_24dp)
+                        .apply(options)
                         .into(profile_photo)
                 }
             }
