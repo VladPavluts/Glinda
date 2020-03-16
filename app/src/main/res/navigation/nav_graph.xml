@@ -21,6 +21,9 @@
         <action
             android:id="@+id/action_chatFragment_to_accountFragment"
             app:destination="@id/accountFragment" />
+        <action
+            android:id="@+id/action_chatFragment_to_chatChannelFragment"
+            app:destination="@id/chatChannelFragment" />
     </fragment>
     <fragment
         android:id="@+id/accountFragment"
@@ -31,4 +34,9 @@
             android:id="@+id/action_accountFragment_to_loginFragment"
             app:destination="@+id/loginFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/chatChannelFragment"
+        android:name="com.example.glinda.ChatFragment.ChatChannelFragment"
+        android:label="fragment_chat_channel"
+        tools:layout="@layout/fragment_chat_channel" />
 </navigation>

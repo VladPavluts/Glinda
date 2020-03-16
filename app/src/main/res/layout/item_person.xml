@@ -23,6 +23,7 @@
 
     <TextView
         android:id="@+id/personName"
+        android:textSize="20sp"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
@@ -37,6 +38,7 @@
 
     <TextView
         android:id="@+id/personBio"
+        android:textSize="16sp"
         android:layout_width="303dp"
         android:layout_height="26dp"
         android:layout_marginStart="80dp"
