@@ -12,12 +12,20 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.glinda.model.TextMessage
 import com.google.firebase.auth.FirebaseAuth
 import java.text.DateFormat
+import java.text.SimpleDateFormat
+import java.util.*
 
 
-class MessageAdapter (val context: Context,var messages: List<TextMessage>): RecyclerView.Adapter<MessageAdapter.ViewHolder>(){
+class MessageAdapter (val context: Context,var messages: MutableList<TextMessage>): RecyclerView.Adapter<MessageAdapter.ViewHolder>(){
 
     private  val inflater: LayoutInflater = LayoutInflater.from(context)
-
+    fun updateItemRV(){
+        notifyItemInserted(getItemCount()+1)
+    }
+    fun updateRecyclerView(list: List<TextMessage>,view:View){
+        messages.clear()
+        messages.addAll(list)
+    }
     override fun getItemCount(): Int = messages.size
     private fun getItem(position: Int)= messages[position]
 
@@ -36,7 +44,7 @@ class MessageAdapter (val context: Context,var messages: List<TextMessage>): Rec
 
         private val messageText: TextView = itemView.findViewById(R.id.textView_message_text)
         private val messageTime: TextView = itemView.findViewById(R.id.textView_message_time)
-       private val messageRoot: RelativeLayout = itemView.findViewById(R.id.message_root)
+        private val messageRoot: RelativeLayout = itemView.findViewById(R.id.message_root)
 
 
         fun bind(message: TextMessage){
@@ -46,8 +54,8 @@ class MessageAdapter (val context: Context,var messages: List<TextMessage>): Rec
 
         }
         private fun setTimeText(message: TextMessage){
-            val dateFormat=DateFormat.getDateTimeInstance()
-            messageTime.text=dateFormat.format(message.time)
+            val sdf=SimpleDateFormat("MM-dd HH:MM",Locale.getDefault())
+            messageTime.text=sdf.format(message.time)
         }
         private fun setMessageRootGravity(message: TextMessage){
             if(message.senderId == FirebaseAuth.getInstance().currentUser?.uid){

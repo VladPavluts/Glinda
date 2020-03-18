@@ -22,4 +22,8 @@ class ChatChannelViewModel : ViewModel(){
             messagesLiveData.value = FirestoreUtil.getListOfMessage(channelId1)
         }
     }
+
+    fun sendMessage(messageToSend:TextMessage){
+        FirestoreUtil.sendMessage(messageToSend, channelId.value!!)
+    }
 }

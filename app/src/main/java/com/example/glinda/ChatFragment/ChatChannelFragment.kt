@@ -25,11 +25,8 @@ class ChatChannelFragment : Fragment() {
 
     private lateinit var viewModel: ChatChannelViewModel
     private lateinit var adapter: MessageAdapter
-    private lateinit var chan: String
 
-    private fun set(){
-        adapter.notifyDataSetChanged()
-    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -38,21 +35,18 @@ class ChatChannelFragment : Fragment() {
         val user: User = arguments!!.getParcelable("USER")!!
         val user_id: String = arguments!!.getString("USER_ID")!!
 
+        val list1 = view.findViewById<RecyclerView>(R.id.messageList)
         viewModel = ViewModelProvider(this).get(ChatChannelViewModel::class.java)
 
-        val list1 = view.findViewById<RecyclerView>(R.id.messageList)
-        adapter = MessageAdapter(activity!!.applicationContext, emptyList())
+
+        adapter = MessageAdapter(activity!!.applicationContext, emptyList<TextMessage>().toMutableList())
 
         viewModel.getFromMessagCloud(user_id)
 
         viewModel.messages.observe(viewLifecycleOwner, Observer { messages ->
-            adapter.messages = messages
+            adapter.updateRecyclerView(messages,view)
             adapter.notifyDataSetChanged()
         })
-        viewModel.channelId.observe(viewLifecycleOwner, Observer {
-            chan = it
-        })
-
 
         view.apply {
             image_send.setOnClickListener {
@@ -61,16 +55,27 @@ class ChatChannelFragment : Fragment() {
                     FirebaseAuth.getInstance().currentUser!!.uid, MessageType.TEXT
                 )
                 inputMessage.setText("")
-                FirestoreUtil.sendMessage(messageToSend, chan)
-                set()
+                if(messageToSend.text!=""){
+                    viewModel.sendMessage(messageToSend)
+                    viewModel.getFromMessagCloud(user_id)
+                    adapter.updateItemRV()
+                }
+                list1.postDelayed({
+                    if((adapter.itemCount-1)!=-1)
+                        list1.smoothScrollToPosition(adapter.itemCount-1)
+                },100)
             }
+            findViewById<Toolbar>(R.id.toolbarChatChannel).title=user.name
         }
-        val toolbar = view.findViewById<Toolbar>(R.id.toolbarChatChannel)
-        toolbar.title = user.name
 
+
+        val layoutManager=LinearLayoutManager(context)
+        layoutManager.stackFromEnd = true
         list1.adapter=adapter
-        list1.layoutManager = LinearLayoutManager(context)
+        list1.layoutManager = layoutManager
+
         return view
 
     }
+
 }

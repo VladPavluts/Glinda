@@ -20,21 +20,19 @@
             app:layout_constraintTop_toTopOf="parent"
             app:titleTextColor="@color/white" />
 
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/messageList"
-            android:layout_width="408dp"
-            android:layout_height="654dp"
-            android:layout_marginTop="44dp"
+            android:layout_width="406dp"
+            android:layout_height="554dp"
+            android:layout_marginTop="8dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintBottom_toTopOf="@+id/relLayout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/toolbarChatChannel"
-            app:layout_constraintVertical_bias="0.392"
             tools:context=".main.MainActivity"
             tools:listitem="@layout/item_message" />
-
 
         <RelativeLayout
             android:id="@+id/relLayout"
