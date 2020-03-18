@@ -1,4 +1,4 @@
-package com.example.glinda.ChatFragment
+package com.example.glinda.chat_fragment
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -15,7 +15,6 @@ import com.example.glinda.R
 import com.example.glinda.model.MessageType
 import com.example.glinda.model.TextMessage
 import com.example.glinda.model.User
-import com.example.glinda.util.FirestoreUtil
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.fragment_chat_channel.view.*
 import java.util.*

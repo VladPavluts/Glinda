@@ -1,4 +1,4 @@
-package com.example.glinda.ChatFragment
+package com.example.glinda.chat_fragment
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

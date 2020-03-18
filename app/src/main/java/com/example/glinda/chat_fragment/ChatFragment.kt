@@ -1,4 +1,4 @@
-package com.example.glinda.ChatFragment
+package com.example.glinda.chat_fragment
 
 import android.os.Bundle
 import android.view.*
@@ -15,7 +15,6 @@ import com.example.glinda.Const.USER_ID
 
 import com.example.glinda.R
 import com.example.glinda.UsersAdapter
-import com.example.glinda.util.FirestoreUtil
 
 class ChatFragment : Fragment() {
 

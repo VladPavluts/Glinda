@@ -15,7 +15,7 @@
     </fragment>
     <fragment
         android:id="@+id/chatFragment"
-        android:name="com.example.glinda.ChatFragment.ChatFragment"
+        android:name="com.example.glinda.chat_fragment.ChatFragment"
         android:label="fragment_chat"
         tools:layout="@layout/fragment_chat" >
         <action
@@ -36,7 +36,7 @@
     </fragment>
     <fragment
         android:id="@+id/chatChannelFragment"
-        android:name="com.example.glinda.ChatFragment.ChatChannelFragment"
+        android:name="com.example.glinda.chat_fragment.ChatChannelFragment"
         android:label="fragment_chat_channel"
         tools:layout="@layout/fragment_chat_channel" />
 </navigation>
