@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.glinda.Const.KEYPOS
 import com.example.glinda.Const.USER
 import com.example.glinda.Const.USER_ID
-
 import com.example.glinda.R
 import com.example.glinda.UsersAdapter
 
@@ -71,15 +70,4 @@ class ChatFragment : Fragment() {
         }
         return true
     }
-
-
-
-
-
-
-
-
-
-
-
 }

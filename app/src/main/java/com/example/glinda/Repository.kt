@@ -16,8 +16,4 @@ object Repository {
         }
 
     }
-    fun signOut() {
-        mAuth.signOut()
-        //prefs.idClient = null
-    }
 }

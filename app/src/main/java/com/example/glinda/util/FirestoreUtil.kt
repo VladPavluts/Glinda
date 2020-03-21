@@ -23,7 +23,8 @@ object FirestoreUtil {
     fun initCurrentUserFirstTime(onComplete:() -> Unit){
         currentUserDocRef.get().addOnSuccessListener{documentSnapshot ->
             if(!documentSnapshot.exists()){
-                val newUser=User(FirebaseAuth.getInstance().currentUser?.displayName ?: "","",null)
+                val newUser=User(FirebaseAuth.getInstance().currentUser?.displayName ?: "","",null,
+                    mutableListOf())
                 currentUserDocRef.set(newUser).addOnSuccessListener{
                     onComplete()
                 }
@@ -119,29 +120,15 @@ object FirestoreUtil {
             .collection("messages")
             .add(message)
     }
-    /*fun getOrCreateChatChannel(otherUserID:String,onComplete: (channelId:String) -> Unit){
-        currentUserDocRef.collection("engagedChatChannels").document(otherUserID)
-            .get().addOnSuccessListener {
-                if(it.exists()){
-                    onComplete(it["channelId"] as @kotlin.ParameterName(name = "channelId") String)
-                    return@addOnSuccessListener
-                }
-                val currentUserId=FirebaseAuth.getInstance().currentUser!!.uid
 
-                val newChannel = chatChannelsCurrentRef.document()
-                newChannel.set(ChatChannel(mutableListOf(currentUserId,otherUserID)))
-                currentUserDocRef.collection("engagedChatChannels")
-                    .document(otherUserID)
-                    .set(mapOf("channelId" to newChannel.id))
+    fun getFCMRegistrationTokens(onComplete: (tokens: MutableList<String>) -> Unit) {
+        currentUserDocRef.get().addOnSuccessListener {
+            val user = it.toObject(User::class.java)!!
+            onComplete(user.registrationTokens)
+        }
+    }
 
-                users.document(otherUserID)
-                    .collection("engagedChatChannels")
-                    .document(currentUserId)
-                    .set(mapOf("channelId" to newChannel.id))
-
-                onComplete(newChannel.id)
-
-            }
-
-    }*/
+    fun setFCMRegistrationTokens(registrationTokens: MutableList<String>) {
+        currentUserDocRef.update(mapOf("registrationTokens" to registrationTokens))
+    }
 }

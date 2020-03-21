@@ -11,7 +11,8 @@
         android:label="LoginFragment" >
         <action
             android:id="@+id/action_loginFragment_to_chatFragment"
-            app:destination="@id/chatFragment" />
+            app:destination="@id/chatFragment"
+            app:popUpTo="@id/nav_graph" />
     </fragment>
     <fragment
         android:id="@+id/chatFragment"

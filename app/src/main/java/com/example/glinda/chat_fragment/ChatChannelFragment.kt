@@ -68,6 +68,7 @@ class ChatChannelFragment : Fragment() {
         }
 
 
+        //сделать сохранение и onBackPressed
         val layoutManager=LinearLayoutManager(context)
         layoutManager.stackFromEnd = true
         list1.adapter=adapter

@@ -11,16 +11,17 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 
 import com.example.glinda.R
 import com.example.glinda.databinding.FragmentLoginBinding
+import com.example.glinda.service.MyFirebaseMessagingService
 import com.example.glinda.util.FirestoreUtil
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.ErrorCodes
 import com.firebase.ui.auth.IdpResponse
-import com.google.firebase.firestore.core.FirestoreClient
+import com.google.firebase.iid.FirebaseInstanceId
 
 
 class LoginFragment : Fragment() {
@@ -31,7 +32,7 @@ class LoginFragment : Fragment() {
     ): View? {
         val binding:FragmentLoginBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_login, container, false)
 
-        val viewModel = ViewModelProviders.of(this).get(LoginViewModel::class.java)
+        val viewModel = ViewModelProvider(this).get(LoginViewModel::class.java)
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
 
@@ -68,13 +69,14 @@ class LoginFragment : Fragment() {
         return binding.root
     }
     private val MY_LOGIN_REQ=1234
-    val providers = arrayListOf(
+    private val providers = arrayListOf(
         AuthUI.IdpConfig.EmailBuilder().build(),
         AuthUI.IdpConfig.GoogleBuilder().build())
 
-    fun showSignInOptions() {
+    private fun showSignInOptions() {
         startActivityForResult(
             AuthUI.getInstance().createSignInIntentBuilder()
+                .setIsSmartLockEnabled(true)
                 .setAvailableProviders(providers)
                 .setLogo(R.drawable.logo)
                 .setTheme(R.style.GlindaTheme)
@@ -83,16 +85,20 @@ class LoginFragment : Fragment() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if(requestCode==MY_LOGIN_REQ){
+        if(requestCode == MY_LOGIN_REQ){
             val response=IdpResponse.fromResultIntent(data)
-            if(resultCode==RESULT_OK)
+            if(resultCode == RESULT_OK)
             {
                 FirestoreUtil.initCurrentUserFirstTime {
                     findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToChatFragment())
-                }
 
+                    FirebaseInstanceId.getInstance().instanceId.addOnSuccessListener{ instanceIdResult ->
+                        val newToken = instanceIdResult.token
+                        MyFirebaseMessagingService.addTokenToFirestore(newToken)
+                    }
+                }
             }
-            else if(resultCode== RESULT_CANCELED){
+            else if(resultCode == RESULT_CANCELED){
                 if(response == null) return
 
                 when(response.error?.errorCode){
