@@ -39,5 +39,10 @@
         android:id="@+id/chatChannelFragment"
         android:name="com.example.glinda.chat_fragment.ChatChannelFragment"
         android:label="fragment_chat_channel"
-        tools:layout="@layout/fragment_chat_channel" />
+        tools:layout="@layout/fragment_chat_channel">
+        <deepLink
+            android:id="@+id/deepLink"
+            android:autoVerify="true"
+            app:uri="https://www.example.com/person/{id}" />
+    </fragment>
 </navigation>

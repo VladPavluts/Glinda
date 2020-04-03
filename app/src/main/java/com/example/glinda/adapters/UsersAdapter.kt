@@ -1,4 +1,4 @@
-package com.example.glinda
+package com.example.glinda.adapters
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -8,9 +8,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.request.RequestOptions
-import com.example.glinda.generated.callback.OnClickListener
+import com.example.glinda.R
 import com.example.glinda.glide.GlideApp
-import com.example.glinda.model.User
 import com.example.glinda.model.UserItem
 import com.example.glinda.util.StorageUtil
 
@@ -20,8 +19,14 @@ class UsersAdapter(val context :Context,var userItems:List<UserItem>,private  va
     private  val inflater: LayoutInflater= LayoutInflater.from(context)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(inflater.inflate(R.layout.item_person, parent,false),context){
-            position ->  clickListener(position)
+        return ViewHolder(
+            inflater.inflate(
+                R.layout.item_person,
+                parent,
+                false
+            ), context
+        ) { position ->
+            clickListener(position)
         }
     }
 

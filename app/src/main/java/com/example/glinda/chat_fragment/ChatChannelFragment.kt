@@ -10,11 +10,11 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.glinda.MessageAdapter
+import com.example.glinda.adapters.MessageAdapter
 import com.example.glinda.R
-import com.example.glinda.model.MessageType
 import com.example.glinda.model.TextMessage
 import com.example.glinda.model.User
+import com.example.glinda.util.FirestoreUtil
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.fragment_chat_channel.view.*
 import java.util.*
@@ -24,26 +24,30 @@ class ChatChannelFragment : Fragment() {
 
     private lateinit var viewModel: ChatChannelViewModel
     private lateinit var adapter: MessageAdapter
-
+    private lateinit var currentUser: User
+    private lateinit var user_id: String
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_chat_channel, container, false)
-        val user: User = arguments!!.getParcelable("USER")!!
-        val user_id: String = arguments!!.getString("USER_ID")!!
-
         val list1 = view.findViewById<RecyclerView>(R.id.messageList)
+        val user_name=arguments!!.getString("USER_NAME")
+        user_id = arguments!!.getString("USER_ID")!!
+
+        FirestoreUtil.getCurrentUser { currentUser=it }
+
         viewModel = ViewModelProvider(this).get(ChatChannelViewModel::class.java)
-
-
-        adapter = MessageAdapter(activity!!.applicationContext, emptyList<TextMessage>().toMutableList())
-
         viewModel.getFromMessagCloud(user_id)
 
+        adapter = MessageAdapter(
+            activity!!.applicationContext,
+            emptyList<TextMessage>().toMutableList()
+        )
+
         viewModel.messages.observe(viewLifecycleOwner, Observer { messages ->
-            adapter.updateRecyclerView(messages,view)
+            adapter.updateRecyclerView(messages)
             adapter.notifyDataSetChanged()
         })
 
@@ -51,7 +55,7 @@ class ChatChannelFragment : Fragment() {
             image_send.setOnClickListener {
                 val messageToSend = TextMessage(
                     inputMessage.text.toString(), Calendar.getInstance().time,
-                    FirebaseAuth.getInstance().currentUser!!.uid, MessageType.TEXT
+                    FirebaseAuth.getInstance().currentUser!!.uid, user_id,currentUser.name
                 )
                 inputMessage.setText("")
                 if(messageToSend.text!=""){
@@ -64,11 +68,9 @@ class ChatChannelFragment : Fragment() {
                         list1.smoothScrollToPosition(adapter.itemCount-1)
                 },100)
             }
-            findViewById<Toolbar>(R.id.toolbarChatChannel).title=user.name
+            findViewById<Toolbar>(R.id.toolbarChatChannel).title=user_name
         }
 
-
-        //сделать сохранение и onBackPressed
         val layoutManager=LinearLayoutManager(context)
         layoutManager.stackFromEnd = true
         list1.adapter=adapter

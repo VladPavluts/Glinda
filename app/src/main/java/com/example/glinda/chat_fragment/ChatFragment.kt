@@ -9,11 +9,10 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.glinda.Const.KEYPOS
-import com.example.glinda.Const.USER
 import com.example.glinda.Const.USER_ID
+import com.example.glinda.Const.USER_NAME
 import com.example.glinda.R
-import com.example.glinda.UsersAdapter
+import com.example.glinda.adapters.UsersAdapter
 
 class ChatFragment : Fragment() {
 
@@ -33,16 +32,17 @@ class ChatFragment : Fragment() {
         val view=inflater.inflate(R.layout.fragment_chat, container, false)
         val toolbar = view.findViewById<Toolbar>(R.id.toolbar)
         val list=view.findViewById<RecyclerView>(R.id.personList)
-        adapter = UsersAdapter(activity!!.applicationContext, emptyList()){
-            position ->
+        adapter = UsersAdapter(
+            activity!!.applicationContext,
+            emptyList()
+        ) { position ->
             val users = viewModel.users.value!!
-            val user=users[position]
-            val bundle=Bundle()
-            bundle.putInt(KEYPOS,position)
-            bundle.putString(USER_ID,user.userID)
-            bundle.putParcelable(USER,user.user)
+            val user = users[position]
+            val bundle = Bundle()
+            bundle.putString(USER_ID, user.userID)
+            bundle.putString(USER_NAME, user.user.name)
 
-            findNavController().navigate(R.id.chatChannelFragment,bundle)
+            findNavController().navigate(R.id.chatChannelFragment, bundle)
 
         }
         viewModel.getFromCloudSt()

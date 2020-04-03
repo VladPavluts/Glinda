@@ -10,10 +10,8 @@ object Repository {
         mAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener{
                 task -> completionListener(task.isSuccessful)
             if (task.isSuccessful) {
-                //prefs.idClient = task.result?.user?.uid
                 Log.d(Const.TAG, "${task.result?.user?.uid}")
             }
         }
-
     }
 }

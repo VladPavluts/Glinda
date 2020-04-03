@@ -18,6 +18,8 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            <nav-graph android:name="ChatChannelFragment"
+                android:value="@navigation/nav_graph" />
         </activity>
 
         <meta-data

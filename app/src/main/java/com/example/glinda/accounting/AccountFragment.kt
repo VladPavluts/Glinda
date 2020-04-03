@@ -1,7 +1,6 @@
 package com.example.glinda.accounting
 
 import android.app.Activity.RESULT_OK
-import android.app.DownloadManager
 import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
@@ -10,12 +9,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.request.Request
 import com.bumptech.glide.request.RequestOptions
-
 import com.example.glinda.R
 import com.example.glinda.glide.GlideApp
 import com.example.glinda.util.FirestoreUtil
@@ -65,7 +62,6 @@ class AccountFragment : Fragment() {
             }
         }
 
-
         return view
     }
 
@@ -87,7 +83,6 @@ class AccountFragment : Fragment() {
 
             isImageChanged=true
         }
-
     }
 
     override fun onStart() {
@@ -105,7 +100,6 @@ class AccountFragment : Fragment() {
                         .into(profile_photo)
                 }
             }
-
         }
     }
 

@@ -1,4 +1,4 @@
-package com.example.glinda
+package com.example.glinda.adapters
 
 import android.content.Context
 import android.view.Gravity
@@ -9,9 +9,9 @@ import android.widget.FrameLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.glinda.R
 import com.example.glinda.model.TextMessage
 import com.google.firebase.auth.FirebaseAuth
-import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -19,10 +19,11 @@ import java.util.*
 class MessageAdapter (val context: Context,var messages: MutableList<TextMessage>): RecyclerView.Adapter<MessageAdapter.ViewHolder>(){
 
     private  val inflater: LayoutInflater = LayoutInflater.from(context)
+
     fun updateItemRV(){
-        notifyItemInserted(getItemCount()+1)
+        notifyItemInserted(itemCount +1)
     }
-    fun updateRecyclerView(list: List<TextMessage>,view:View){
+    fun updateRecyclerView(list: List<TextMessage>){
         messages.clear()
         messages.addAll(list)
     }
@@ -31,7 +32,11 @@ class MessageAdapter (val context: Context,var messages: MutableList<TextMessage
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
-            inflater.inflate(R.layout.item_message, parent, false),
+            inflater.inflate(
+                R.layout.item_message,
+                parent,
+                false
+            ),
             context
         )
     }
@@ -46,12 +51,10 @@ class MessageAdapter (val context: Context,var messages: MutableList<TextMessage
         private val messageTime: TextView = itemView.findViewById(R.id.textView_message_time)
         private val messageRoot: RelativeLayout = itemView.findViewById(R.id.message_root)
 
-
         fun bind(message: TextMessage){
             messageText.text=message.text
             setTimeText(message)
             setMessageRootGravity(message)
-
         }
         private fun setTimeText(message: TextMessage){
             val sdf=SimpleDateFormat("MM-dd HH:MM",Locale.getDefault())
