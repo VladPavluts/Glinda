@@ -32,9 +32,9 @@
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/usernameLayout"
-                    android:layout_width="378dp"
-                    android:layout_height="55dp"
-                    android:layout_marginStart="32dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
                     android:layout_marginTop="24dp"
                     android:layout_marginEnd="24dp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -51,9 +51,9 @@
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/bioLayout"
-                    android:layout_width="378dp"
-                    android:layout_height="59dp"
-                    android:layout_marginStart="32dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
                     android:layout_marginTop="32dp"
                     android:layout_marginEnd="24dp"
                     app:layout_constraintEnd_toEndOf="parent"
